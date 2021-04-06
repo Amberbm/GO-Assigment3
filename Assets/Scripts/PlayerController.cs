@@ -5,6 +5,15 @@ using System.Collections;
 public class PlayerController : MonoBehaviour
 {
 
+    public float baseSpeed = 0.4f;     // 
+    public static int dotCount = 0;
+    public  float speedAdjustment = 1;
+
+    public float firstPunishment = 0.7f;  // snelheid aanpassing vanaf 1 dots
+    public float secondPunishment = 0.3f; //snelheid aanpassing vanaf 5 dots
+    public int cycleDuration = 100;  // houdbij hoelang de speler niets moet oppakken voor reset
+    public static int cycleTracker = 0;   // houd bij hoe lang geleden een dot was opgepakt
+
     public float speed = 0.4f;
     Vector2 _dest = Vector2.zero;
     Vector2 _dir = Vector2.zero;
@@ -36,6 +45,27 @@ public class PlayerController : MonoBehaviour
         _dest = transform.position;
     }
 
+    void HandleSpeedAjustments()            ///// eigen methode
+    {
+        cycleTracker++;
+        
+        if (cycleTracker >= cycleDuration)
+        {
+            dotCount = 0;
+            cycleTracker = 0;
+        }
+
+        if (dotCount == 0)
+            speedAdjustment = 1;
+        if (dotCount >= 1)
+            speedAdjustment = firstPunishment;
+        if (dotCount >= 5)
+            speedAdjustment = secondPunishment;
+
+        //float adjustment = 0.1f;
+        speed = baseSpeed * speedAdjustment;
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -44,6 +74,7 @@ public class PlayerController : MonoBehaviour
             case GameManager.GameState.Game:
                 ReadInputAndMove();
                 Animate();
+                HandleSpeedAjustments();
                 break;
 
             case GameManager.GameState.Dead:

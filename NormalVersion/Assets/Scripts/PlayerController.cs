@@ -10,8 +10,8 @@ public class PlayerController : MonoBehaviour
     public  float speedAdjustment = 1;
 
     public float firstPunishment = 0.7f;  // snelheid aanpassing vanaf 1 dots
-    public float secondPunishment = 0.3f; //snelheid aanpassing vanaf 5 dots
-    public int cycleDuration = 100;  // houdbij hoelang de speler niets moet oppakken voor reset
+    public float secondPunishment = 0.4f; //snelheid aanpassing vanaf 5 dots
+    public int cycleDuration = 80;  // houdbij hoelang de speler niets moet oppakken voor reset
     public static int cycleTracker = 0;   // houd bij hoe lang geleden een dot was opgepakt
 
     public float speed = 0.4f;
@@ -57,9 +57,9 @@ public class PlayerController : MonoBehaviour
 
         if (dotCount == 0)
             speedAdjustment = 1;
-        if (dotCount >= 1)
-            speedAdjustment = firstPunishment;
         if (dotCount >= 5)
+            speedAdjustment = firstPunishment;
+        if (dotCount >= 10)
             speedAdjustment = secondPunishment;
 
         //float adjustment = 0.1f;

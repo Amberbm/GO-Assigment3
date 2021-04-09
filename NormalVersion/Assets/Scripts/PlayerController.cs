@@ -4,8 +4,8 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
-
-    public float baseSpeed = 0.4f;     // 
+                                     // eigen variabeles << 
+    public float baseSpeed = 0.4f;     // houd bij hoeveel dot zijn opgegeten binen een cycle
     public static int dotCount = 0;
     public  float speedAdjustment = 1;
 
@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     public float secondPunishment = 0.4f; //snelheid aanpassing vanaf 5 dots
     public int cycleDuration = 50;  // houdbij hoelang de speler niets moet oppakken voor reset
     public static int cycleTracker = 0;   // houd bij hoe lang geleden een dot was opgepakt
-
+                                          // >>
     public float speed = 0.4f;
     Vector2 _dest = Vector2.zero;
     Vector2 _dir = Vector2.zero;
@@ -49,21 +49,20 @@ public class PlayerController : MonoBehaviour
     {
         cycleTracker++;
         
-        if (cycleTracker >= cycleDuration)
+        if (cycleTracker >= cycleDuration)// houd bij wanneer de dotcount moet worden gereset
         {
             dotCount = 0;
             cycleTracker = 0;
         }
 
-        if (dotCount == 0)
+        if (dotCount == 0)                 //handeled de speedajustment gebasseerd op de dotcount
             speedAdjustment = 1;
         if (dotCount >= 5)
             speedAdjustment = firstPunishment;
         if (dotCount >= 10)
             speedAdjustment = secondPunishment;
-
-        //float adjustment = 0.1f;
-        speed = baseSpeed * speedAdjustment;
+        
+        speed = baseSpeed * speedAdjustment;//pas de speed aan gebaseerd op de speed adjustment
     }
 
     // Update is called once per frame
@@ -77,9 +76,11 @@ public class PlayerController : MonoBehaviour
                 HandleSpeedAjustments();
                 break;
 
-            case GameManager.GameState.Dead:
-                dotCount = 0;
+            case GameManager.GameState.Dead: 
+                                    // eigen code <<
+                dotCount = 0;         // reset dotcount/ tracker als de speler doodgaat
                 cycleTracker = 0;
+                                       // >>
                 if (!_deadPlaying)
                     StartCoroutine("PlayDeadAnimation");
                 break;

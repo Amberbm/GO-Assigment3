@@ -11,9 +11,10 @@ public class Pacdot : MonoBehaviour {
 		    GameObject[] pacdots = GameObject.FindGameObjectsWithTag("pacdot");
             Destroy(gameObject);
 
-            PlayerController.dotCount++;
+            // eigen code <<
+            PlayerController.dotCount++; // als een dot word opgegeten gaat de dot count omhoog en word de cycletracker gereset
             PlayerController.cycleTracker = 0;
-
+            // >>
 
             if (pacdots.Length == 1)
 		    {

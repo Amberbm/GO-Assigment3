@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
 
     public float firstPunishment = 0.7f;  // snelheid aanpassing vanaf 1 dots
     public float secondPunishment = 0.3f; //snelheid aanpassing vanaf 5 dots
-    public int cycleDuration = 100;  // houdbij hoelang de speler niets moet oppakken voor reset
+    public int cycleDuration = 50;  // houdbij hoelang de speler niets moet oppakken voor reset
     public static int cycleTracker = 0;   // houd bij hoe lang geleden een dot was opgepakt
 
     public float speed = 0.4f;
@@ -78,6 +78,8 @@ public class PlayerController : MonoBehaviour
                 break;
 
             case GameManager.GameState.Dead:
+                dotCount = 0;
+                cycleTracker = 0;
                 if (!_deadPlaying)
                     StartCoroutine("PlayDeadAnimation");
                 break;
